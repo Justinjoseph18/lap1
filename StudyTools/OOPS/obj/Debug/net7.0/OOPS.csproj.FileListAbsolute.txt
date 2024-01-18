@@ -1,0 +1,14 @@
+C:\workspace\StudyTools\OOPS\bin\Debug\net7.0\OOPS.exe
+C:\workspace\StudyTools\OOPS\bin\Debug\net7.0\OOPS.deps.json
+C:\workspace\StudyTools\OOPS\bin\Debug\net7.0\OOPS.runtimeconfig.json
+C:\workspace\StudyTools\OOPS\bin\Debug\net7.0\OOPS.dll
+C:\workspace\StudyTools\OOPS\bin\Debug\net7.0\OOPS.pdb
+C:\workspace\StudyTools\OOPS\obj\Debug\net7.0\OOPS.GeneratedMSBuildEditorConfig.editorconfig
+C:\workspace\StudyTools\OOPS\obj\Debug\net7.0\OOPS.AssemblyInfoInputs.cache
+C:\workspace\StudyTools\OOPS\obj\Debug\net7.0\OOPS.AssemblyInfo.cs
+C:\workspace\StudyTools\OOPS\obj\Debug\net7.0\OOPS.csproj.CoreCompileInputs.cache
+C:\workspace\StudyTools\OOPS\obj\Debug\net7.0\OOPS.dll
+C:\workspace\StudyTools\OOPS\obj\Debug\net7.0\refint\OOPS.dll
+C:\workspace\StudyTools\OOPS\obj\Debug\net7.0\OOPS.pdb
+C:\workspace\StudyTools\OOPS\obj\Debug\net7.0\OOPS.genruntimeconfig.cache
+C:\workspace\StudyTools\OOPS\obj\Debug\net7.0\ref\OOPS.dll
