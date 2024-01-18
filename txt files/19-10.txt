@@ -1,0 +1,113 @@
+elif [ "${{ secrets.CONDITION_VALUE }}" == "MINOR" ]; then
+              minor=$((${{ secrets.MINOR }} + 1))
+              echo "::set-output name=minor::$minor"
+            elif [ "${{ secrets.CONDITION_VALUE }}" == "MAJOR" ]; then
+              major=$((${{ secrets.MAJOR }} + 1))
+              echo "::set-output name=major::$major"
+
+
+
+
+      - name: Set New Minor Value
+        uses: gliech/create-github-secret-action@v1
+        with:
+            name: MINOR
+            value: ${{ steps.vars.outputs.minor }}
+            pa_token: ${{ secrets.PA_TOKEN }}
+
+
+      - name: Set New Major Value
+        uses: gliech/create-github-secret-action@v1
+        with:
+            name: MAJOR
+            value: ${{ steps.vars.outputs.major }}
+            pa_token: ${{ secrets.PA_TOKEN }}
+	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+production live master
+
+
+name: (Central India) Finder backend web API CI/CD- master (production) branch
+
+on:
+  push:
+    branches:
+      - master
+    tags:
+      - "!*"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: 'Checkout GitHub Actions'
+      uses: actions/checkout@v2
+
+    - uses: azure/docker-login@v1
+      with:
+        login-server: chavarafindercontainerhub.azurecr.io
+        username: ${{ secrets.CONTAINER_REGISTRY_USERNAME }} 
+        password: ${{ secrets.CONTAINER_REGISTRY_PASSWORD }} 
+        
+    - name: Set outputs
+      id: vars
+      run: |
+          echo "::set-output name=version_number::V0.1.0"
+
+
+    - name: Create and push tag
+      run: |
+        git tag ${{ steps.vars.outputs.version_number }}
+        git push origin ${{ steps.vars.outputs.version_number }} 
+
+
+    - name: Login to Azure
+      uses: azure/login@v1
+      with:
+        creds: ${{ secrets.AZURE_SERVICE_PRINCIPAL }}
+      
+
+    - name: Build and Push Docker Image
+      run: |
+        cd ./AI.Finder.BE.Service
+        docker build . -t chavarafindercontainerhub.azurecr.io/ai-finder-be-api-dotnetcore:${{ steps.vars.outputs.version_number }}
+        docker push chavarafindercontainerhub.azurecr.io/ai-finder-be-api-dotnetcore:${{ steps.vars.outputs.version_number }}
+    
+        
+    - uses: azure/webapps-deploy@v2
+      with:
+        app-name: 'chavara-finder-be-webapi-dotnet-prod'
+        slot-name: 'production'
+        images: chavarafindercontainerhub.azurecr.io/ai-finder-be-api-dotnetcore:${{ steps.vars.outputs.version_number }}        
+
+    - name: Create release
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        tag: ${{ steps.vars.outputs.version_number }} 
+      run: |
+        gh release create "$tag" \
+          --repo="$GITHUB_REPOSITORY" \
+          --title="${tag}" \
+          --notes-file="RELEASE_NOTE.md"
+
+    

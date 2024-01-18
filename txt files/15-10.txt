@@ -1,0 +1,155 @@
+name: (Central India) Finder backend webbbb  API CI/CD -test branch
+
+on:
+  push:
+    branches:
+      - justin/feature-test
+    tags:
+      - "!*"
+  workflow_dispatch:
+permissions:
+  contents: write
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: 'Checkout GitHub Actions'
+      uses: actions/checkout@v2
+
+    - uses: azure/docker-login@v1
+      with:
+        login-server: chavcifindertest.azurecr.io
+        username: ${{ secrets.CONTAINER_REGISTRY_USERNAME }} 
+        password: ${{ secrets.CONTAINER_REGISTRY_PASSWORD }} 
+    
+    - name: Set outputs
+      id: vars
+      run: echo "::set-output name=version_number::v1.0.0" 
+    
+    - name: Create and push tag
+      run: |
+        git tag ${{ steps.vars.outputs.version_number }}
+        git push origin ${{ steps.vars.outputs.version_number }} --tags --force -u ${{ secrets.GH_PAT }}
+
+    - uses: azure/login@v1
+      with:
+        creds: ${{ secrets.AZURE_SERVICE_PRINCIPAL }}
+
+    - run: |
+        cd ./AI.Finder.BE.Service
+        docker build . -t chavcifindertest.azurecr.io/ai-finder-be-api-dotnetcore:${{ steps.vars.outputs.version_number }}
+        docker push chavcifindertest.azurecr.io/ai-finder-be-api-dotnetcore:${{ steps.vars.outputs.version_number }} 
+    
+
+   
+    - name: Create release
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        tag: ${{ steps.vars.outputs.version_number }} 
+      run: |
+        gh release create "$tag" \
+          --repo="$GITHUB_REPOSITORY" \
+          --title="${tag}" \
+          --notes-file="RELEASE_NOTE.md"
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+- name: Set outputs
+      id: vars
+      run: echo "::set-output name=current_version::${{ secrets.VERSION}}" 
+      run: echo "::set-output name=counter::${{ secrets.DEV_COUNTER +1}}" 
+      run: echo "::set-output name=version_number::${{ steps.vars.outputs.current_version }}-beta-${{ steps.vars.outputs.counter }}"
+      # update dev_counter value = steps.vars.outputs.counter 
+      
+
+
+
+
+
+
+token on 16-10-2023
+
+
+ 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
+
+
+code on 16-10-2023
+
+
+name: (Central India) Finder backend webbbb  API CI/CD -test branch
+
+on:
+  push:
+    branches:
+      - justin/feature-test
+    tags:
+      - "!*"
+  workflow_dispatch:
+permissions:
+  contents: write
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: 'Checkout GitHub Actions'
+      uses: actions/checkout@v2
+
+    - uses: azure/docker-login@v1
+      with:
+        login-server: chavcifindertest.azurecr.io
+        username: ${{ secrets.CONTAINER_REGISTRY_USERNAME }} 
+        password: ${{ secrets.CONTAINER_REGISTRY_PASSWORD }} 
+    
+    
+    - name: Set outputs
+      id: vars
+      run: echo "::set-output name=current_version::${{ secrets.VERSION}}" 
+      run: echo "::set-output name=counter::${{ secrets.DEV_COUNTER +1}}" 
+      run: echo "::set-output name=version_number::${{ steps.vars.outputs.current_version }}-beta-${{ steps.vars.outputs.counter }}"
+      # update dev_counter value = steps.vars.outputs.counter 
+
+
+    - name: Create and push tag
+      run: |
+        git tag ${{ steps.vars.outputs.version_number }}
+        git push origin ${{ steps.vars.outputs.version_number }} --tags --force -u ${{ secrets.GH_PAT }}
+
+    - uses: azure/login@v1
+      with:
+        creds: ${{ secrets.AZURE_SERVICE_PRINCIPAL }}
+
+    - run: |
+        cd ./AI.Finder.BE.Service
+        docker build . -t chavcifindertest.azurecr.io/ai-finder-be-api-dotnetcore:${{ steps.vars.outputs.version_number }}
+        docker push chavcifindertest.azurecr.io/ai-finder-be-api-dotnetcore:${{ steps.vars.outputs.version_number }} 
+    
+
+   
+    - name: Create release
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        tag: ${{ steps.vars.outputs.version_number }} 
+      run: |
+        gh release create "$tag" \
+          --repo="$GITHUB_REPOSITORY" \
+          --title="${tag}" \
+          --notes-file="RELEASE_NOTE.md"
+
+

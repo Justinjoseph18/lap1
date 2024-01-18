@@ -1,0 +1,38 @@
+azure PAT name -azure-migration
+PAT-237l73xmnbh36jp2hoccsv7rwklqvupvtkuywyhslioktvtl2luq
+
+
+github PAT name-github-migrations
+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
+
+
+erate Migration Script:
+    * To generate a migration script, run,
+    > gh ado2gh generate-script --ado-org Abelindia --github-org Abel-India --output outputscript.ps1
+
+
+        Replace the placeholders with the following:
+            * SOURCE	    Name of the source organization
+            * DESTINATION	Name of the destination organization
+            * FILENAME	    A filename for the resulting migration script
+
+
+gh ado2gh generate-script --ado-org Abelindia --github-org Technopalette --output outputscript.ps1
+
+
+
+gh ado2gh migrate-repo --ado-org Abelindia --ado-team-project Finder --ado-repo ai-finder-be-api-donetcore --github-org Abel-India --github-repo ai-finder-be-api-donetcore
+    
+    Replace the placeholders with the following:
+
+            SOURCE        Name of the source organization
+            CURRENT-NAME  The name of the repository you want to migrate
+            DESTINATION   Name of the destination organization
+            NEW-NAME	   The name you want the migrated repository to have
+            TEAM-PROJECT  Name of the team project of the repository you want to migrate
+
+
+
+
+
+gh ado2gh migrate-repo --ado-org Abelindia --ado-team-project Finder --ado-repo ai-finder-be-api-donetcore --github-org Technopalette --github-repo ai-finder-be-api-dotnetcore  

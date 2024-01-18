@@ -1,0 +1,84 @@
+name: (Test) Finder Web Business react app CI/CD
+
+on:
+  push:
+    branches:
+      - test
+  workflow_dispatch:
+
+jobs:
+  build_and_deploy_job:
+    runs-on: ubuntu-latest
+    env:    
+      VITE_BASE_URL: https://finder-api.chavaramatrimony.org
+      VITE_LEGACY_API_BASE_URL: https://test-api.chavaramatrimony.org
+      VITE_IMG_BASE_URL: https://www.chavaramatrimony.com/Images
+      VITE_LEGACY_AUTH_TOKEN: Y2hhdmFyYUFQSTphaWJlbCFAIw==
+      VITE_LEGACY_SESSION_ID: chavarasite
+      VITE_REVOKE_REFRESH_TOKEN_LIFETIME: 1800000   
+      VITE_FINDER_IDLE_TIMEOUT: 3600000 
+      VITE_BASE_LEGACY_URL: https://bcrm.chavaramatrimony.org/chmangebranchadmincfwclogin/login.aspx
+
+    strategy:
+      fail-fast: true
+      matrix:
+        node-version: [16.x]
+    name: Build and Deploy Job
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v3
+        with:
+          submodules: true
+          
+      - name: Setup Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node-version }}
+     
+      - name: Install yarn
+        run: npm install --global yarn
+        
+      - name: Install dependencies
+        run: yarn
+        
+      - name: Build project
+        run: yarn run build          
+      
+      - name: Set outputs
+        id: vars
+        run: |
+          counter=$((${{ secrets.TEST_COUNTER }} + 1))
+          echo "::set-output name=counter::$counter"
+          echo "::set-output name=version_number::V${{ secrets.VERSION_NUMBER }}-beta-$counter"
+          
+        
+      
+      - name: Build And Deploy
+        id: builddeploy
+        uses: Azure/static-web-apps-deploy@v1
+        with:
+          azure_static_web_apps_api_token: ${{ secrets.AZURE_DEPLOYMENT_KEY_TEST }}
+          repo_token: ${{ secrets.GITHUB_TOKEN }} # Used for Github integrations (i.e. PR comments)
+          action: "upload"
+          ###### Repository/Build Configurations - These values can be configured to match your app requirements. ######
+          # For more information regarding Static Web App workflow configurations, please visit: https://aka.ms/swaworkflowconfig
+          app_location: "/" # App source code path
+          api_location: "" # Api source code path - optional
+          output_location: "build" # Built app content directory - optional
+          ###### End of Repository/Build Configurations ######
+
+      - name: update Counter Value
+        uses: gliech/create-github-secret-action@v1
+        with:
+          name: TEST_COUNTER
+          value: ${{ steps.vars.outputs.counter }}
+          pa_token: ${{ secrets.PAT }}
+
+      - name: setup env variable
+        run: echo "env variable is $VITE_APPLICATION_VERSION_NO "
+        env:  
+          VITE_APPLICATION_VERSION_NO: ${{ steps.vars.outputs.version_number }}
+        
+       
+
+          

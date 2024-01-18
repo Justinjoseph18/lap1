@@ -1,0 +1,146 @@
+name: Central India Finder Backend Webb API CI/CD - Test Branch
+
+on:
+  push:
+    branches:
+      - justin/feature-test
+    tags:
+      - "!*"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 'Checkout GitHub Actions'
+        uses: actions/checkout@v2
+
+      - name: Login to Docker
+        uses: azure/docker-login@v1
+        with:
+          login-server: chavcifindertest.azurecr.io
+          username: ${{ secrets.CONTAINER_REGISTRY_USERNAME }}
+          password: ${{ secrets.CONTAINER_REGISTRY_PASSWORD }}
+
+      - name: Set outputs
+        id: vars
+        run: |
+          counter=$((${{ secrets.DEV_COUNTER }} + 1))
+          echo "::set-output name=counter::$counter"
+          echo "::set-output name=version_number::V1.0.0-beta-$counter"
+
+      - name: Login to Azure
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_SERVICE_PRINCIPAL }}
+
+      - name: Build and Push Docker Image
+        run: |
+          cd ./AI.Finder.BE.Service
+          docker build . -t chavcifindertest.azurecr.io/ai-finder-be-api-dotnetcore:${{ steps.vars.outputs.version_number }}
+          docker push chavcifindertest.azurecr.io/ai-finder-be-api-dotnetcore:${{ steps.vars.outputs.version_number }}
+
+      - name: Increase Counter Value
+        uses: gliech/create-github-secret-action@v1
+        with:
+          name: DEV_COUNTER
+          value: ${{ steps.vars.outputs.counter }}
+          pa_token: ${{ secrets.PA_TOKEN }}
+
+
+
+
+
+working till patch update
+
+name: Central India Finder Backend Webbbb API CI/CD - Test Branch
+
+on:
+  push:
+    branches:
+      - justin/feature-test
+    tags:
+      - "!*"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 'Checkout GitHub Actions'
+        uses: actions/checkout@v2
+
+      - name: Login to Docker
+        uses: azure/docker-login@v1
+        with:
+          login-server: chavcifindertest.azurecr.io
+          username: ${{ secrets.CONTAINER_REGISTRY_USERNAME }}
+          password: ${{ secrets.CONTAINER_REGISTRY_PASSWORD }}
+
+      - name: Set Outputs
+        id: vars
+        run: |
+            if [ "${{ secrets.CONDITION_VALUE }}" == "PATCH" ]; then
+              patch=$((${{ secrets.PATCH }} + 1))
+              echo "::set-output name=patch::$patch"
+              echo "::set-output name=version_number::V${{ secrets.MAJOR }}.${{ secrets.MINOR }}.$patch"
+            fi
+       
+      - name: Login to Azure
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_SERVICE_PRINCIPAL }}
+
+      - name: Build and Push Docker Image
+        run: |
+          cd ./AI.Finder.BE.Service
+          docker build . -t chavcifindertest.azurecr.io/ai-finder-be-api-dotnetcore:${{ steps.vars.outputs.version_number }}
+          docker push chavcifindertest.azurecr.io/ai-finder-be-api-dotnetcore:${{ steps.vars.outputs.version_number }}
+
+      - name: Set New Patch Value
+        uses: gliech/create-github-secret-action@v1
+        with:
+          name: PATCH
+          value: ${{ steps.vars.outputs.patch }}
+          pa_token: ${{ secrets.PA_TOKEN }}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

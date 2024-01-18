@@ -1,0 +1,22 @@
+FASTLANE(spriint 22)till 06-12-2023
+completeed the workflow
+
+https://docs.fastlane.tools/getting-started/android/setup/
+https://docs.fastlane.tools/actions/upload_to_play_store/
+https://medium.com/@seshasai_30381/flutter-github-actions-a-ci-cd-pipeline-for-flutter-apps-with-github-actions-fastlane-and-7e34d9727b2a
+https://github.com/flutter/gallery/blob/main/.github/workflows/release_deploy_play_store.yml
+https://developer.android.com/studio/publish/app-signing#app-signing-google-play
+https://docs.flutter.dev/deployment/cd
+https://medium.com/scalereal/automate-publishing-app-to-the-google-play-store-with-github-actions-fastlane-ac9104712486
+https://docs.fastlane.tools/actions/upload_to_play_store/#parameters
+https://github.com/PatilShreyas/AndroidFastlaneCICD/blob/master/fastlane/Fastfile
+https://proandroiddev.com/automating-the-android-build-and-release-process-using-fastlane-part-i-fb3ce61b678
+https://proandroiddev.com/automating-the-android-build-and-release-process-using-fastlane-circle-ci-part-4-32f78b6ac876
+https://proandroiddev.com/automating-the-android-build-and-release-process-using-fastlane-part-2-607770df0db9
+
+vedio 
+https://www.youtube.com/watch?v=scfOk5SgrKU
+https://www.youtube.com/watch?v=71Er1o7dSf4
+https://www.youtube.com/watch?v=akFF1uJWZck
+https://www.youtube.com/watch?v=ieOdT-p603Y&t=89s
+https://www.youtube.com/watch?v=g0GNuoCOtaQ&t=1063s

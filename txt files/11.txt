@@ -1,0 +1,50 @@
+TASK:
+Create an excel sheet showing all the courses in bloomreach and make it
+with fees of each course and discription
+
+Tried to connect between db and chavara api using docker 
+got an error 
+
+ERROR::
+i am trying to connect a postgres docker image with my application,
+at first i make the db up and then i turned my application up but then 
+i got the error Unhandled exception. finder-api | Npgsql.NpgsqlException 
+(0x80004005): Failed to connect to [::1]:5432
+
+
+the issue was solved using 
+https://stackoverflow.com/questions/75191926/application-not-able-to-connect-to-postgresql-in-docker-compose
+
+
+BUt all migrations were not coming due to some left tree issue 
+
+ERROR::
+finder-api  | fail: Microsoft.EntityFrameworkCore.Database.Command[20102]
+finder-api  |       Failed executing DbCommand (17ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+finder-api  |       SET ROLE "finder-admin";
+finder-api  |       CREATE EXTENSION IF NOT EXISTS ltree;
+finder-api  | Unhandled exception. 
+finder-api  | Npgsql.PostgresException (0x80004005): 42501: permission denied to create extension "ltree"
+
+
+resolved the issue using the following steps
+
+
+1.Identify the Container Name or ID:
+	docker ps
+2.Access the PostgreSQL Container Bash Shell:
+	docker exec -it dbpgsql bash
+3.Access the PostgreSQL Database:
+	psql -U postgres
+4.Switch to Your Database:
+	\c your_database_name
+5.Grant Privileges:
+	GRANT ALL PRIVILEGES ON DATABASE your_database_name(finder) TO "finder-admin"(this is the role created from the database(finder));
+6.Exit the PostgreSQL and Container Shells:
+	\q
+7.exit bash:
+	exit
+8.Do docker compose up
+
+
+then all migrations got in the database which is evaluated using debeaver

@@ -1,0 +1,91 @@
+
+https://www.youtube.com/watch?v=lWA2Q26zhV4&t=116s
+
+Creating service principal
+On azure app service
+On Search bar ,
+click on azure AD-azure active directory
+
+On the side bar,
+	click app registrations > new registration > "give any name" > select supported accounted type as 
+"account in organization directory only" > register
+
+On the window appear,
+	copy the application(client) id
+	copy the tenant id
+	copy the subs
+
+Authentication
+
+click on certificates and secrets,
+	 new client secret > give discribtion and add expiry date> click on add >copy the client secret
+Verifiy the authentication:
+	home > ad> app registration> service principle will appear if it is sucessfull.
+
+
+To make service principle acess in azure,we should assign security
+
+Autherization
+
+Home > subscrbtion > Acess control(IAM) > add > add role assignment > make the role as 
+contributor > next > click on members > search for service principle name > click select
+> click next > click review and assign
+
+
+
+Run this command with Azure Cloud Shell in the Azure portal
+	az ad sp create-for-rbac --name "myApp" --role contributor \
+                                --scopes /subscriptions/{subscription-id}/resourceGroups/{resource-group} \
+                                --json-auth 
+
+In the example, replace the placeholders with your subscription ID, resource group 
+
+
+
+{
+  "clientId": "5e1cbb04-2321-49cb-a7de-4989a0f71e17",
+  "clientSecret": "Edu8Q~wpnvvXCH5lEj3HymLaAsTRnuQ942HJGdzB",
+  "subscriptionId": "9448ada5-105c-488f-8af5-edcf114ff900",
+  "tenantId": "02087597-9a1c-45e8-b101-da3a3ff7a9f9",
+  "activeDirectoryEndpointUrl": "https://login.microsoftonline.com",
+  "resourceManagerEndpointUrl": "https://management.azure.com/",
+  "activeDirectoryGraphResourceId": "https://graph.windows.net/",
+  "sqlManagementEndpointUrl": "https://management.core.windows.net:8443/",
+  "galleryEndpointUrl": "https://gallery.azure.com/",
+  "managementEndpointUrl": "https://management.core.windows.net/"
+}
+
+
+
+service principal updated on 1-1-2024
+{
+  "clientId": "5e1cbb04-2321-49cb-a7de-4989a0f71e17",
+  "clientSecret": "lZg8Q~SHFEJGO03qYaJPGGq-ALdj0H~_wCjn_c58",
+  "subscriptionId": "9448ada5-105c-488f-8af5-edcf114ff900",
+  "tenantId": "02087597-9a1c-45e8-b101-da3a3ff7a9f9",
+  "activeDirectoryEndpointUrl": "https://login.microsoftonline.com",
+  "resourceManagerEndpointUrl": "https://management.azure.com/",
+  "activeDirectoryGraphResourceId": "https://graph.windows.net/",
+  "sqlManagementEndpointUrl": "https://management.core.windows.net:8443/",
+  "galleryEndpointUrl": "https://gallery.azure.com/",
+  "managementEndpointUrl": "https://management.core.windows.net/"
+}
+
+
+
+
+
+
+
+
+
+
+
+
+Sign in to the Azure portal:
+Navigate to https://portal.azure.com.
+Sign in with your Azure account.
+Navigate to Microsoft Entra ID:
+Click on the "Microsoft Entra ID" option in the left-hand menu.
+App Registrations:
+Under the "Manage" section, click on "App registrations."

@@ -1,0 +1,8 @@
+https://github.com/skarpdev/dotnet-version-cli
+https://semver.org/
+https://en.wikipedia.org/wiki/Software_versioning
+https://github.com/marketplace/actions/dotnet-bump-versions
+https://learn.microsoft.com/en-us/dotnet/standard/library-guidance/breaking-changes
+https://microsoft.github.io/code-with-engineering-playbook/continuous-delivery/devops-provider-recipes/github-actions/runtime-variables/runtime-variables/
+https://github.com/marketplace/actions/automated-version-bump
+https://github.com/dotnet/core/issues/4491

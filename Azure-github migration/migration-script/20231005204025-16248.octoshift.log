@@ -1,0 +1,11 @@
+[2023-10-05 20:40:27] [WARNING] GitHub is currently experiencing availability issues.  See https://www.githubstatus.com for details.
+[2023-10-05 20:40:27] [INFO] You are running the latest version of the ado2gh CLI [v1.1.0]
+[2023-10-05 20:40:27] [INFO] GITHUB ORG: Abel-India
+[2023-10-05 20:40:27] [INFO] ADO ORG: Abelindia
+[2023-10-05 20:40:27] [INFO] OUTPUT: outputscript.ps1
+[2023-10-05 20:40:27] [INFO] Generating Script...
+[2023-10-05 20:40:28] [INFO] ADO Org: Abelindia
+[2023-10-05 20:40:28] [INFO]   Team Project: Finder
+[2023-10-05 20:40:28] [INFO]     Repo: ai-finder-fe-web-business-react-test
+[2023-10-05 20:40:28] [INFO]     Repo: ai-finder-fe-web-business-react
+[2023-10-05 20:40:28] [INFO]     Repo: ai-finder-be-api-donetcore

@@ -1,0 +1,5 @@
+    - uses: azure/webapps-deploy@v2
+      with:
+        app-name: 'chavara-finder-be-webapi-dotnet-dev'
+        slot-name: 'production'
+        images: chavarafindercontainerhub.azurecr.io/ai-finder-be-api-dotnetcore:${{ steps.vars.outputs.sha_short }}

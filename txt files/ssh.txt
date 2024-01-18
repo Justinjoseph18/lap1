@@ -1,0 +1,9 @@
+Host justinyahoo github.com
+	HostName github.com
+	PreferredAuthentications publickey
+	IdentityFile ~/.ssh/id_ed25519
+
+Host justingmail github.com
+	HostName github.com
+	PreferredAuthentications publickey
+	IdentityFile ~/.ssh/id_ed25519_second

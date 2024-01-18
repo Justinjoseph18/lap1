@@ -1,0 +1,9 @@
+https://birtony.medium.com/setting-up-automated-release-workflow-with-github-actions-628dbca2446e
+https://lurumad.github.io/generating-release-notes-using-github-actions
+https://stackoverflow.com/questions/75679683/how-can-i-auto-generate-a-release-note-and-create-a-release-using-github-actions
+https://cli.github.com/manual/gh_release_create
+https://docs.github.com/en/repositories/releasing-projects-on-github/automatically-generated-release-notes
+https://github.com/jgraph/drawio-desktop/releases/tag/v22.0.2
+https://git-scm.com/book/en/v2/Git-Basics-Tagging
+https://www.atlassian.com/git/tutorials/inspecting-a-repository/git-tag
+https://jonathansoma.com/everything/git/github-actions-403-error/

@@ -1,0 +1,86 @@
+	
+
+
+name: Central India Finder Backend Webb API CI/CD - Test Branch
+
+on:
+  push:
+    branches:
+      - justin/feature-test
+    tags:
+      - "!*"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 'Checkout GitHub Actions'
+        uses: actions/checkout@v2
+
+      - name: Login to Docker
+        uses: azure/docker-login@v1
+        with:
+          login-server: chavcifindertest.azurecr.io
+          username: ${{ secrets.CONTAINER_REGISTRY_USERNAME }}
+          password: ${{ secrets.CONTAINER_REGISTRY_PASSWORD }}
+    
+
+      - name: Set Outputs
+        id: vars
+        run: |
+          if [ "${{ secrets.CONDITION_VALUE }}" == "PATCH" ]; then
+            patch=$((${{ secrets.PATCH }} + 1))
+            echo "::set-output name=patch::$(${{ secrets.PATCH }} + 1)"
+          elif [ "${{ secrets.CONDITION_VALUE }}" == "MINOR" ]; then
+            minor=$((${{ secrets.MINOR }} + 1))
+            echo "::set-output name=minor::$(${{ secrets.MINOR }} + 1)"
+          elif [ "${{ secrets.CONDITION_VALUE }}" == "MAJOR" ]; then
+            major=$((${{ secrets.MAJOR }} + 1))
+            echo "::set-output name=major::$(${{ secrets.MAJOR }} + 1)"
+          fi
+        
+      - name: Set New Patch Value
+        uses: gliech/create-github-secret-action@v1
+        with:
+            name: PATCH
+            value: ${{ steps.vars.outputs.patch }}
+            pa_token: ${{ secrets.PA_TOKEN }}
+
+      - name: Set New Minor Value
+        uses: gliech/create-github-secret-action@v1
+        with:
+            name: MINOR
+            value: ${{ steps.vars.outputs.minor }}
+            pa_token: ${{ secrets.PA_TOKEN }}
+
+      - name: Set New Major Value
+        uses: gliech/create-github-secret-action@v1
+        with:
+            name: MAJOR
+            value: ${{ steps.vars.outputs.major }}
+            pa_token: ${{ secrets.PA_TOKEN }}
+       - name: Set Version Number
+        id: set_version
+        run: echo "::set-output name=version_number::V${{ secrets.MAJOR }}.${{ secrets.MINOR }}.${{ secrets.PATCH }}"
+
+
+      - name: Login to Azure
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_SERVICE_PRINCIPAL }}
+
+      - name: Build and Push Docker Image
+        run: |
+          cd ./AI.Finder.BE.Service
+          docker build -t chavcifindertest.azurecr.io/ai-finder-be-api-dotnetcore:${{ steps.vars.outputs.version_number }} .
+          docker push chavcifindertest.azurecr.io/ai-finder-be-api-dotnetcore:${{ steps.vars.outputs.version_number }}
+
+
+
+ 
+
